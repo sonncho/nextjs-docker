@@ -1,9 +1,26 @@
 import Head from 'next/head'
 import { Inter } from 'next/font/google'
+import { useState } from 'react'
+import cartsApi from '~/libs/axios/cartsApi'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
+  const [ carts, setCarts ] = useState(null);
+  const [ loading, setLoading] = useState(false);
+
+  const onClickGetCarts = async () => {
+    setLoading(true);
+    try {
+      const data = await cartsApi.list()
+      setCarts(data?.data);
+
+      setLoading(false);
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <>
       <Head>
@@ -16,6 +33,11 @@ export default function Home() {
         <div className="container">
           <div className='box'>
             <h1>Next.js Docker로 배포하기</h1>
+            <button type='button' onClick={onClickGetCarts}>carts fake API호출하기</button>
+            { loading && 'loading...'}
+            {
+              carts && <pre>{JSON.stringify(carts, null, 2)}</pre>
+            }
           </div>
         </div>
       </main>
