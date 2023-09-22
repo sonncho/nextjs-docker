@@ -6,7 +6,7 @@ services:
     container_name: nginx
     restart: always
     ports:
-      - '80:80'
+      - '12300:12300'
       - '443:443'
     volumes:
       - /etc/letsencrypt/:/etc/letsencrypt/
@@ -15,7 +15,7 @@ services:
     environment:
       - TZ=Asia/Seoul
   blue:
-    image: ${DOCKER_REGISTRY}/${DOCKER_APP_NAME}:${DOCKER_IMAGE_TAG}
+    image: ${DOCKER_APP_NAME}
     container_name: ${DOCKER_APP_NAME}-blue
     restart: always
     expose:
@@ -23,7 +23,7 @@ services:
     environment:
       - TZ=Asia/Seoul
   green:
-    image: ${DOCKER_REGISTRY}/${DOCKER_APP_NAME}:${DOCKER_IMAGE_TAG}
+    image: ${DOCKER_APP_NAME}
     container_name: ${DOCKER_APP_NAME}-green
     restart: always
     expose:
